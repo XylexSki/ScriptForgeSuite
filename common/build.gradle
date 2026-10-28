@@ -1,0 +1,17 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'dev.scriptforge'
+version = rootProject.property('mod_version')
+
+repositories { mavenCentral() }
+
+dependencies {
+    api "com.google.code.gson:gson:${rootProject.property('gson_version')}"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}

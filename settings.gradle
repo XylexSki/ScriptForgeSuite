@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories {
+        maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+rootProject.name = 'scriptforge'
+include 'common', 'headless'
+// The Fabric mod needs Loom and Minecraft's toolchain. Pass -PheadlessOnly to build only the headless client.
+if (!providers.gradleProperty('headlessOnly').isPresent()) {
+    include 'mod'
+}

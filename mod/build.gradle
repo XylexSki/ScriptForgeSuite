@@ -1,0 +1,48 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+version = rootProject.property('mod_version')
+group = 'dev.scriptforge'
+base { archivesName = 'scriptforge' }
+
+repositories {
+    mavenCentral()
+}
+
+// The macro file format is shared with the headless client. Compile its sources straight into the mod
+// (Gson is already provided by Minecraft, so nothing extra has to be bundled for it).
+sourceSets {
+    main {
+        java { srcDir '../common/src/main/java' }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${rootProject.property('minecraft_version')}"
+    mappings "net.fabricmc:yarn:${rootProject.property('yarn_mappings')}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.property('loader_version')}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.property('fabric_version')}"
+
+    // Rhino = the scripting engine. Bundled inside the mod jar (jar-in-jar).
+    implementation "org.mozilla:rhino:${rootProject.property('rhino_version')}"
+    include "org.mozilla:rhino:${rootProject.property('rhino_version')}"
+}
+
+processResources {
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = "UTF-8"
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}

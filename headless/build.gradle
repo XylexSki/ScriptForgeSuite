@@ -1,0 +1,40 @@
+plugins {
+    id 'application'
+}
+
+group = 'dev.scriptforge'
+version = rootProject.property('mod_version')
+
+repositories {
+    mavenLocal() // where `./gradlew publishToMavenLocal` puts a self-built MCProtocolLib (see gradle.properties)
+    mavenCentral()
+    maven {
+        name = 'opencollab'
+        url = 'https://repo.opencollab.dev/main/'
+    }
+}
+
+dependencies {
+    implementation project(':common')
+    implementation "org.geysermc.mcprotocollib:protocol:${rootProject.property('mcprotocollib_version')}"
+    implementation "org.slf4j:slf4j-simple:${rootProject.property('slf4j_version')}"
+}
+
+application {
+    mainClass = 'dev.scriptforge.headless.Main'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+// Single runnable jar:  ./gradlew :headless:fatJar  ->  headless/build/libs/scriptforge-headless-all.jar
+tasks.register('fatJar', Jar) {
+    archiveFileName = 'scriptforge-headless-all.jar'
+    manifest { attributes 'Main-Class': 'dev.scriptforge.headless.Main' }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from sourceSets.main.output
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'module-info.class'
+}

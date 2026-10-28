@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "scriptforge",
+  "version": "${version}",
+  "name": "ScriptForge",
+  "description": "A scripting engine for Minecraft: write macros in JavaScript with simple chat, movement, mouse, GUI and HUD APIs.",
+  "authors": ["You"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.scriptforge.ScriptForge"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

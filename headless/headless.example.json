@@ -1,0 +1,50 @@
+{
+  "server": "play.example.com:25565",
+  "macro": "macros/farm.sfmacro",
+
+  "mode": "relative",
+  "loops": 0,
+  "loopDelayTicks": 40,
+
+  "startDelayTicks": 100,
+  "settleTicks": 40,
+  "joinDelayMs": 5000,
+
+  "maxSetbacks": 3,
+  "disconnectWhenDone": true,
+  "reconnects": 2,
+  "reconnectDelaySeconds": 30,
+
+  "replayChat": true,
+  "replayCommands": true,
+
+  "joinCommands": [
+    { "text": "/home farm", "delayTicks": 40 }
+  ],
+
+  "proxies": [
+    "socks5://user:pass@203.0.113.10:1080",
+    "socks5://user:pass@203.0.113.11:1080",
+    "http://203.0.113.12:8080"
+  ],
+
+  "accounts": [
+    {
+      "name": "Farmer_01",
+      "mode": "offline",
+      "joinCommands": [ { "text": "/login mypassword", "delayTicks": 40 } ]
+    },
+    {
+      "name": "Farmer_02",
+      "mode": "offline",
+      "proxy": "socks5://user:pass@203.0.113.20:1080"
+    },
+    {
+      "name": "MyRealName",
+      "mode": "token",
+      "uuid": "00000000-0000-0000-0000-000000000000",
+      "accessToken": "env:SF_TOKEN_MYREALNAME",
+      "proxy": "none"
+    }
+  ]
+}
