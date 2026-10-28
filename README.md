@@ -1,5 +1,5 @@
 # ScriptForge Suite
-
+Made With Claude.
 Record a macro once inside Minecraft, then replay it on as many accounts as you like, each one optionally behind its own proxy.
 
 | Module | What it is |
